@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+     http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/context
+     http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/mvc
+     http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
+
+    <!-- 可以扫描controller、service等-->
+    <context:component-scan base-package="com.tyson.controller"/>
+
+    <mvc:annotation-driven/>
+    <!--<mvc:annotation-driven conversion-service="formattingConversionService"/>-->
+    <!--<bean id="formattingConversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="formatters">
+            <set>
+                <bean class="com.tyson.formatter.DateFormatter">
+                    <constructor-arg type="java.lang.String" value="MM-dd-yyyy"/>
+                </bean>
+            </set>
+        </property>
+    </bean>-->
+    <!--<mvc:annotation-driven conversion-service="conversionService"/>-->
+    <!--<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <property name="converters">
+            <list>
+                <bean class="com.tyson.converter.StringToDateConverter">
+                    <constructor-arg type="java.lang.String" value="MM-dd-yyyy"/>
+                </bean>
+            </list>
+        </property>
+    </bean>-->
+
+
+    <!--实现了Validator接口的校验器，将validator注册到适配器中-->
+    <!--方式一：注解的适配器-->
+    <!--<mvc:annotation-driven conversion-service="formattingConversionService" validator="userValidator"/>
+    <bean id="userValidator" class="com.tyson.validator.UserValidator"/>-->
+    <!--方式二：非注解的适配器-->
+    <!--自定义webBinder-->
+    <!--<bean id="webBinder" class="org.springframework.web.bind.support.ConfigurableWebBindingInitializer">
+        <property name="validator" ref="userValidator"/>
+    </bean>
+    <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+        <property name="webBindingInitializer" ref="webBinder"/>
+    </bean>-->
+
+    <!--处理器映射器-->
+    <!--配置Handler时bean name即为url-->
+    <!--    <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>-->
+    <!--/User/findUser.action 映射到UserController的findUser()方法上-->
+    <!--    <bean class="org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"/>-->
+    <!--通过内部参数配置请求的url和handler的映射关系-->
+    <!--    <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+            <property name="mappings">
+                <props>
+                    <prop key="/queryUser.action">userController</prop>
+                </props>
+            </property>
+        </bean>
+        <bean id="userController" class="com.tyson.controller.UserController"/>-->
+
+    <!--处理器适配器 SimpleControllerHandlerAdapter支持所有实现了Controller接口的Handler控制器-->
+    <!--<bean class="org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter"/>-->
+    <!--Handler需实现HttpRequestHandler接口-->
+    <!--<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>-->
+
+    <!--视图解析器-->
+    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+        <property name="prefix" value="/resources/"/>
+        <property name="suffix" value=".html"/>
+        <!--InternalResourceView 用于展示JSP页面，要使用jstl标签展示数据，就要使用JstlView-->
+        <!--/WEB-INF下的内容不能通过request请求的方式直接访问到，而InternalResourceView在服务器端通过跳转的方式便可解决这个问题-->
+        <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
+    </bean>
+    <!--无需单独指定viewClass对象-->
+    <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>-->
+
+    <!--默认配置文件为/WEB-INF/view.xml-->
+    <!--在配置有多种类型的视图解析器情况下（ViewResolver链），order会指定处理视图的优先级，order越小优先级越高-->
+    <!--order属性对所有实现Ordered接口的视图解析器都适用-->
+<!--    <bean class="org.springframework.web.servlet.view.XmlViewResolver">
+        <property name="location" value="/WEB-INF/config/view.xml"/>
+        <property name="order" value="1"/>
+    </bean>-->
+
+    <!--BeanNameViewResolver 视图的bean配置信息在springmvc.xml中-->
+<!--    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+        <property name="order" value="1"/>
+    </bean>
+    <bean id="hello" class="org.springframework.web.servlet.view.InternalResourceView">
+        <property name="url" value="/hello.jsp"/>
+    </bean>-->
+
+    <!--默认配置文件是classpath:view.properties-->
+<!--    <bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
+        <property name="basename">
+            <value>viewResource</value>
+        </property>
+        <property name="order" value="1"/>
+    </bean>-->
+
+<!--    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver">
+        <property name="prefix" value="fm"/>
+        <property name="suffix" value=".ftl"/>
+        <property name="order" value="1"/>
+    </bean>-->
+
+<!--    <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <property name="templateLoaderPath" value="/WEB-INF/freemarker/template"/>
+    </bean>-->
+
+
+
+    <!--配置Handler处理器-->
+    <!--<bean name="/findUser" class="com.tyson.controller.UserController"/>-->
+
+    <!--静态资源的处理-->
+    <mvc:default-servlet-handler/>
+
+    <!--两个*，它表示映射/resources/下所有的URL，包括子路径-->
+    <!--<mvc:resources mapping="/resources/**" location="/WEB-INF/, classpath:config/, /resources/" cache-period="31536000"/>-->
+</beans>

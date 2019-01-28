@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>hello</title>
+</head>
+<body>
+    <form action="/springmvcdemo/user/findUserByCondition.action" method="post">
+        id: <input type="int" name="id"/>
+        name: <input type="text" name="name"/>
+        <input type="submit"/>
+    </form>
+
+    <form action="/springmvcdemo/user/findUsers.action" method="post">
+        <input name="users[0].id" value="1"/>
+        <input name="users[0].name" value="戴树彬"/>
+        <input name="users[1].id" value="2"/>
+        <input name="users[1].name" value="sophia"/>
+        <input type="submit"/>
+    </form>
+</body>
+</html>

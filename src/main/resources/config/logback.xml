@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- 打印到控制台 -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 默认配置为PatternLayoutEncoder -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <!--没有设置appender，此logger本身不打印信息；
+    包com.tyson没有设置打印级别，所有继承上级root的打印级别；
+    additivity默认为true，logger的打印信息向上级传递-->
+    <logger name="com.tyson"/>
+    <!-- additivity为false，打印信息不会向上级传递；
+    指定了名字为"STDOUT"的appender，日志级别为DEBUG，只有级别高于DEBUG的日志信息会被输出 -->
+    <logger name="com.tyson.controller.DemoController" level="DEBUG" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <root level="ERROR">
+        <appender-ref ref="STDOUT" />
+    </root>
+</configuration>
