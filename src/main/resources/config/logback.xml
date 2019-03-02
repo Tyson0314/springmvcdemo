@@ -7,16 +7,10 @@
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
-    <!--没有设置appender，此logger本身不打印信息；
-    包com.tyson没有设置打印级别，所有继承上级root的打印级别；
-    additivity默认为true，logger的打印信息向上级传递-->
-    <logger name="com.tyson"/>
-    <!-- additivity为false，打印信息不会向上级传递；
-    指定了名字为"STDOUT"的appender，日志级别为DEBUG，只有级别高于DEBUG的日志信息会被输出 -->
-    <logger name="com.tyson.controller.DemoController" level="DEBUG" additivity="false">
-        <appender-ref ref="STDOUT"/>
-    </logger>
-    <root level="ERROR">
+    <!--将org.springframeword.web包下的类的日志级别设置为debug-->
+    <!--开发SpringMVC经常出现和参数类型相关的4XX错误，设置此项可以看到更详细的错误信息-->
+    <logger name="org.springframework.web" level="DEBUG"/>
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>
 </configuration>

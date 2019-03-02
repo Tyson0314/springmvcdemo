@@ -11,29 +11,14 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.build.timestamp.format>yyyyMMdd</maven.build.timestamp.format>
-        <spring.version>4.2.0.RELEASE</spring.version>
+        <spring.version>5.0.9.RELEASE</spring.version>
         <logback.version>1.2.3</logback.version>
-        <slf4j.version>1.7.25</slf4j.version>
+        <slf4j.version>1.7.12</slf4j.version>
+        <jsp.version>2.0</jsp.version>
+        <json.version>2.9.1</json.version>
     </properties>
 
-    <distributionManagement>
-        <repository>
-            <id>releases</id>
-            <name>releases</name>
-            <url>
-                http://localhost:8081/nexus/content/repositories/releases
-            </url>
-        </repository>
-        <snapshotRepository>
-            <id>snapshots</id>
-            <url>
-                http://localhost:8081/nexus/content/repositories/snapshots/
-            </url>
-        </snapshotRepository>
-    </distributionManagement>
-
     <dependencies>
-
         <!--validation-->
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -46,17 +31,33 @@
             <version>1.1.0.Final</version>
         </dependency>
 
-        <!--日志-->
+        <!--使用slf4f和logback作为日志-->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.12</version>
+            <version>${slf4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>jcl-over-slf4j</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
-            <version>1.0.13</version>
+            <version>${logback.version}</version>
         </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-access</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.codehaus.janino</groupId>
             <artifactId>janino</artifactId>
@@ -90,30 +91,6 @@
 
         <dependency>
             <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aspects</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-expression</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
             <version>${spring.version}</version>
         </dependency>
@@ -125,7 +102,21 @@
         </dependency>
         <!--spring end -->
 
-        <!--springmvc 控制层 start -->
+        <!--springmvc-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!--springmvc end-->
+
+        <!--其他web依赖-->
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>
@@ -139,28 +130,18 @@
         </dependency>
 
         <dependency>
-            <groupId>taglibs</groupId>
-            <artifactId>standard</artifactId>
-            <version>1.1.2</version>
+            <groupId>javax.servlet</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>${jsp.version}</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-
+        <!--springmvc默认没有将对象转化成json的转化器，需添加json依赖-->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.7.4</version>
+            <version>${json.version}</version>
         </dependency>
-        <!--springmvc end -->
+        <!--其他web依赖 end-->
+
     </dependencies>
 </project>
