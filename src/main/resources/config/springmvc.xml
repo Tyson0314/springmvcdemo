@@ -69,13 +69,13 @@
     <!--<bean class="org.springframework.web.servlet.mvc.HttpRequestHandlerAdapter"/>-->
 
     <!--视图解析器-->
-    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+<!--    <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="prefix" value="/resources/"/>
         <property name="suffix" value=".html"/>
-        <!--InternalResourceView 用于展示JSP页面，要使用jstl标签展示数据，就要使用JstlView-->
-        <!--/WEB-INF下的内容不能通过request请求的方式直接访问到，而InternalResourceView在服务器端通过跳转的方式便可解决这个问题-->
+        &lt;!&ndash;InternalResourceView 用于展示JSP页面，要使用jstl标签展示数据，就要使用JstlView&ndash;&gt;
+        &lt;!&ndash;/WEB-INF下的内容不能通过request请求的方式直接访问到，而InternalResourceView在服务器端通过跳转的方式便可解决这个问题&ndash;&gt;
         <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView"/>
-    </bean>
+    </bean>-->
     <!--无需单独指定viewClass对象-->
     <!-- <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/jsp"/>
@@ -90,13 +90,12 @@
         <property name="order" value="1"/>
     </bean>-->
 
-    <!--BeanNameViewResolver 视图的bean配置信息在springmvc.xml中-->
-<!--    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
+    <!--通过把返回的逻辑视图名称去匹配定义好的视图bean对象-->
+    <!-- 通过 order 属性来定义视图解析器的优先级, order 值越小优先级越高 -->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver">
         <property name="order" value="1"/>
     </bean>
-    <bean id="hello" class="org.springframework.web.servlet.view.InternalResourceView">
-        <property name="url" value="/hello.jsp"/>
-    </bean>-->
+    <bean id="myView" class="com.tyson.view.MyView"/>
 
     <!--默认配置文件是classpath:view.properties-->
 <!--    <bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver">
